@@ -56,7 +56,8 @@ var debug = {};
 
 <script type="text/javascript" src="./lib/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.js"></script>
 
-<script type="text/javascript" src="./js/example1.js"></script>
+<!-- <script type="text/javascript" src="./js/example1.js"></script> -->
+<script type="text/javascript" src="./js/final.js"></script>
 <script type="text/javascript" src="./js/bootstrap.js"></script>
 
 
@@ -88,45 +89,17 @@ var debug = {};
 <div class="row">
 	<!-- Div for the project tree viewer -->
   	<div class="col-xs-3" > 
-		<!-- 3 setup a container element -->
-	  	<div id="jstree">
-		    <!-- in this example the tree is populated from inline HTML -->
-		    <ul>
-		      <li>Main Project 1
-		        <ul>
-		          <li id="child_node_1">Sub Project 1
-		          	<ul>
-			          	<li id="_1">Sub Project 1.1</li>
-			          	<li>Sub Project 2</li>
-		        	</ul>
-		        	</li>
-		          <li>Sub Project 2</li>
-		        </ul>
-		      </li>
-		      <li>Main Project 2</li>
-		    </ul>
-	  	</div>
-	</div>
+
+		<div id="treeViewDiv"></div>
+	</div>  	
 
   	<!-- Div for the 3d renderer+ -->
   	<div class="col-xs-9">  		
-		<div id="full_screen">
+		<div id="full_screen" style="top : 0px !important">
 			<div id="viewport"></div>
 			<div id="progress_bar"></div>
 		</div>
 	</div>
 </div>
-
-<script>
-	  $(function () {
-	    // 6 create an instance when the DOM is ready
-	    $('#jstree').jstree();
-	    // 7 bind to events triggered on the tree
-	    $('#jstree').on("changed.jstree", function (e, data) {
-	      console.log(data.selected);
-	    });		    
-	  });
-	  </script>
-
 </body>
 </html>

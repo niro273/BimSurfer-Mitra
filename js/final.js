@@ -98,9 +98,9 @@ $(function()
 	
 	function loadProject(project) {
 		o.model = o.bimServerApi.getModel(project.oid, project.lastRevisionId, project.schema, false, function(model){
-//			model.getAllOfType("IfcProject", true, function(project){
-//				buildDecomposedTree(project, $(".tree"), 0);
-//			});
+			// model.getAllOfType("IfcProject", true, function(project){
+			// 	buildDecomposedTree(project, $(".tree"), 0);
+			// });
 		});
 
 		o.bimServerApi.call("ServiceInterface", "getRevisionSummary", {roid: project.lastRevisionId}, function(summary){

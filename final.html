@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
+
+<title>BIMsurfer - Basic viewer</title>
+
+<script type="text/javascript">
+
+var debug = {};
+
+</script>
+
+<!-- 2 load the theme CSS file -->
+<link rel="stylesheet" href="css/style.min.css" />
+
+<!-- 4 include the jQuery library -->
+<script type="text/javascript" src="./lib/jquery-1.10.2/jquery-1.10.2.min.js"></script>
+
+<!-- 5 include the minified jstree source -->
+<script src="js/jstree.min.js"></script>
+
+<script type="text/javascript" src="./lib/jquery-1.10.2/jquery.cookie.js"></script>
+<script type="text/javascript" src="./api/BIMSURFER.js"></script>
+<script type="text/javascript" src="./lib/scenejs/scenejs.js"></script>
+<script type="text/javascript" src="./api/SceneJS.js"></script>
+<script type="text/javascript" src="./api/Constants.js"></script>
+<script type="text/javascript" src="./api/ProgressLoader.js"></script>
+<script type="text/javascript" src="./api/Types/Light.js"></script>
+<script type="text/javascript" src="./api/Types/Light/Ambient.js"></script>
+<script type="text/javascript" src="./api/Types/Light/Sun.js"></script>
+<script type="text/javascript" src="./api/Control.js"></script>
+<script type="text/javascript" src="./api/Control.js"></script>
+<script type="text/javascript" src="./api/Control/ClickSelect.js"></script>
+<script type="text/javascript" src="./api/Control/LayerList.js"></script>
+<script type="text/javascript" src="./api/Control/ProgressBar.js"></script>
+<script type="text/javascript" src="./api/Control/PickFlyOrbit.js"></script>
+<script type="text/javascript" src="./api/Control/ObjectTreeView.js"></script>
+<script type="text/javascript" src="./api/Events.js"></script>
+<script type="text/javascript" src="./api/StringView.js"></script>
+<script type="text/javascript" src="./api/GeometryLoader.js"></script>
+<script type="text/javascript" src="./api/AsyncStream.js"></script>
+<script type="text/javascript" src="./api/DataInputStream.js"></script>
+<script type="text/javascript" src="./api/Viewer.js"></script>
+<script type="text/javascript" src="./api/Util.js"></script>
+<script type="text/javascript" src="js/bimserverapibootstrap.js"></script>
+<script type="text/javascript" src="js/String.js"></script>
+<script type="text/javascript" src="js/utils.js"></script>
+
+<link rel="stylesheet" href="./css/basic.css" type="text/css" />
+<link rel="stylesheet" href="./css/example1.css" type="text/css" />
+<link rel="stylesheet" href="./css/bootstrap.css" type="text/css" />
+<link rel="stylesheet" href="./lib/jquery-ui-1.10.3.custom/css/custom-theme/jquery-ui-1.10.3.custom.css">
+
+<script type="text/javascript" src="./lib/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.js"></script>
+
+<script type="text/javascript" src="./js/example1.js"></script>
+<script type="text/javascript" src="./js/bootstrap.js"></script>
+
+
+</head>
+
+<body oncontextmenu="return false;">
+
+
+<!-- Start of NavBar -->
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Mitra</a>
+    </div>
+  </div><!-- /.container-fluid -->
+</nav>
+
+<!-- End of NavBar -->
+
+
+<!-- Stack the columns on mobile by making one full-width and the other half-width -->
+<div class="row">
+	<!-- Div for the project tree viewer -->
+  	<div class="col-xs-3" > 
+		<!-- 3 setup a container element -->
+	  	<div id="jstree">
+		    <!-- in this example the tree is populated from inline HTML -->
+		    <ul>
+		      <li>Main Project 1
+		        <ul>
+		          <li id="child_node_1">Sub Project 1
+		          	<ul>
+			          	<li id="_1">Sub Project 1.1</li>
+			          	<li>Sub Project 2</li>
+		        	</ul>
+		        	</li>
+		          <li>Sub Project 2</li>
+		        </ul>
+		      </li>
+		      <li>Main Project 2</li>
+		    </ul>
+	  	</div>
+	</div>
+
+  	<!-- Div for the 3d renderer+ -->
+  	<div class="col-xs-9">  		
+		<div id="full_screen">
+			<div id="viewport"></div>
+			<div id="progress_bar"></div>
+		</div>
+	</div>
+</div>
+
+<script>
+	  $(function () {
+	    // 6 create an instance when the DOM is ready
+	    $('#jstree').jstree();
+	    // 7 bind to events triggered on the tree
+	    $('#jstree').on("changed.jstree", function (e, data) {
+	      console.log(data.selected);
+	    });		    
+	  });
+	  </script>
+
+</body>
+</html>

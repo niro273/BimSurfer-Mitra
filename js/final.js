@@ -2,7 +2,7 @@
 $(function()
 {
 	var o = this;
-	var jsonObject = {
+	var jsonTree = {
 			"core": {
 			"data": []
 			}
@@ -15,9 +15,11 @@ $(function()
 
 	SceneJS.configure({ pluginPath: "lib/scenejs/plugins" });
 
+	/* Reset the credentials with the server credentials */
 	var serverUrl = "http://127.0.0.1:8080/";
 	var username = "admin@bimserver.org";
 	var pass = "admin";
+
 	connect(serverUrl,username,pass);
 	
 	function showSelectProject() {
@@ -26,8 +28,6 @@ $(function()
 		});
 
 		var dialog = $('<div />').attr('title', 'Open a project');
-		var projectList = $('<ul />').attr('id', 'projects').appendTo(dialog);
-		var treeList = "";
 
 		o.bimServerApi.call("Bimsie1ServiceInterface", "getAllProjects", {onlyActive: true, onlyTopLevel: false}, function(projects){
 			projects.forEach(function(project){
@@ -36,21 +36,31 @@ $(function()
 					var identifier = $(this).parent().data('project');
 					var parentId = project.parentId;
 					var objId = project.oid;
-					// If parent id is -1 set it to root
+					/* If parent id is -1 its a main project so replace with # for the js tree */
 					if(parentId == -1){
 						parentId = "#";
 					};
-					jsonObject['core']['data'].push({'id':objId, 'parent' : parentId, "text":project.name,'data':project})					
+					jsonTree['core']['data'].push({'id':objId, 'parent' : parentId, "text":project.name,'data':project})
 				}
 			});
-			$('#treeViewDiv').jstree(jsonObject);
+
+            /* Initiate the json tree drawing */
+			$('#treeViewDiv').jstree(jsonTree);
 			
 		});
 	}
 
+    /* If the tree node is selected */
 	$('#treeViewDiv').on("changed.jstree", function (e, data) {
-	      console.log(data.selected);	
-	      loadProject(jsonObject['core']['data'][0]['data']);      
+	      console.log(data.selected);
+
+        /* Find the node of the project selected */
+        for(var i = 0; i < jsonTree['core']['data'].length; i++) {
+            var obj = jsonTree['core']['data'][i];
+            if(data.selected == obj.id){
+                loadProject(jsonTree['core']['data'][i]['data']);
+            }
+        }
 	});
 	
 	function connect(server, email, password) {
@@ -98,87 +108,68 @@ $(function()
 	
 	function loadProject(project) {
 		o.model = o.bimServerApi.getModel(project.oid, project.lastRevisionId, project.schema, false, function(model){
-			// model.getAllOfType("IfcProject", true, function(project){
-			// 	buildDecomposedTree(project, $(".tree"), 0);
-			// });
+			 //model.getAllOfType("IfcProject", true, function(project){
+			 //	buildDecomposedTree(project, $(".tree"), 0);
+			//   console.log(project);
+			 //});
 		});
 
 		o.bimServerApi.call("ServiceInterface", "getRevisionSummary", {roid: project.lastRevisionId}, function(summary){
 			summary.list.forEach(function(item){
 				if (item.name == "IFC Entities") {
 					var _this = this;
-					var dialog = $('<div />').attr('title', 'What types do you want to load?');
-					var typesList = $('<ul />').attr('id', 'types').appendTo(dialog);
+					var totObjects = 0;
+					var toLoad = {};
 
 					item.types.forEach(function(type){
-						var checkbox = $('<input />').attr('type', 'checkbox').attr('name', 'types').val(type.name);
-						
+                        /* get the total count of the IFC Entities */
+						totObjects += type.count;
+						toLoad[type.name] = {mode: 0};
 						if(BIMSURFER.Constants.defaultTypes.indexOf(type.name) != -1) {
-							$(checkbox).attr('checked', 'checked');
-						}
-						
-						$('<div />').append($('<label />').text(type.name).prepend(checkbox)).appendTo(typesList);
-					});
-
-					$(dialog).dialog({
-						autoOpen: true,
-						width: 450,
-						maxHeight: $('div#full_screen').height() - 50,
-						modal: true,
-						closeOnEscape: false,
-						open: function(event, ui) { $(".ui-dialog .ui-dialog-titlebar-close").hide(); },
-						close: function() { $(dialog).remove(); },
-						buttons: {
-							'Load': function()
-							{
-								var checkedTypes = $(dialog).find('input:checkbox:checked');
-
-								var toLoad = {};
-								$(checkedTypes).each(function()
-								{
-									toLoad[$(this).val()] = {mode: 0};
-								});
-
-								$(dialog).dialog('close');
-
-								var layerLists = $('div#leftbar').find('div#layer_list').find('.data');
-								if($(layerLists).is('.empty')) {
-									$(layerLists).empty();
-								}
-
-								$(window).resize(resize);
-								
-		                        var models = {};
-		                        models[project.lastRevisionId] = o.model;
-		                        for (var key in toLoad) {
-		                        	o.model.getAllOfType(key, true, function(object){
-		                        		object.trans.mode = 0;
-		                        	});
-		                        }
-		                        var geometryLoader = new GeometryLoader(o.bimServerApi, models, o.viewer);
-		                   
-		                        var progressdiv = $("<div class=\"progressdiv\">");
-		                        var text = $("<div class=\"text\">");
-		                        text.html(project.name);
-		                        var progress = $("<div class=\"progress progress-striped\">");
-		                        var progressbar = $("<div class=\"progress-bar\">");
-		                        progressdiv.append(text);
-		                        progressdiv.append(progress);
-		                        progress.append(progressbar);
-		                        
-		                        //containerDiv.find(".progressbars").append(progressdiv);
-		                        
-		                        geometryLoader.addProgressListener(function(progress){
-		                        	progressbar.css("width", progress + "%");
-		                        	if (progress == 100) {
-		                        		progressdiv.fadeOut(800);
-		                        	}
-		                        });
-		                        geometryLoader.setLoadTypes(project.lastRevisionId, project.schema, toLoad);
-		                        o.viewer.loadGeometry(geometryLoader);		                        
-							}
 						}
 					});
+
+					//
+					var layerLists = $('div#leftbar').find('div#layer_list').find('.data');
+					if($(layerLists).is('.empty')) {
+						$(layerLists).empty();
+					}
+
+					$(window).resize(resize);
+
+					var models = {};
+					var objCount = 0;
+					models[project.lastRevisionId] = o.model;
+					for (var key in toLoad) {
+						o.model.getAllOfType(key, true, function(object){
+							object.trans.mode = 0;
+							//console.log(object);
+							objCount++;
+							console.log('current count : ' + objCount + ' total count : ' + totObjects + ' key : ' + object['object']['_t']
+							+ ' id : ' + object.oid);
+						});
+					}
+					var geometryLoader = new GeometryLoader(o.bimServerApi, models, o.viewer);
+
+					var progressdiv = $("<div class=\"progressdiv\">");
+					var text = $("<div class=\"text\">");
+					text.html(project.name);
+					var progress = $("<div class=\"progress progress-striped\">");
+					var progressbar = $("<div class=\"progress-bar\">");
+					progressdiv.append(text);
+					progressdiv.append(progress);
+					progress.append(progressbar);
+
+					//containerDiv.find(".progressbars").append(progressdiv);
+
+					geometryLoader.addProgressListener(function(progress){
+						progressbar.css("width", progress + "%");
+						if (progress == 100) {
+							progressdiv.fadeOut(800);
+						}
+					});
+					geometryLoader.setLoadTypes(project.lastRevisionId, project.schema, toLoad);
+					o.viewer.loadGeometry(geometryLoader);
 				}
 			});
 		});
@@ -255,6 +246,13 @@ $(function()
 				}
 			});
 		}
+
+		function isAlreadyExists(){
+			var myArray = [0,1,2],
+				needle = 1,
+				index = indexOf.call(myArray, needle); // 1
+		}
+
 //		if(typeof this.SYSTEM.scene.data.properties[node.getId()] == 'undefined') {
 //			return;
 //		}

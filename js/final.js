@@ -8,6 +8,11 @@ $(function()
 			}
 		};
 
+	var objCount = 0;
+	var totObjects = 0;
+
+	var runOnce=true;
+
 
 	o.server = null;
 	o.viewer = null;
@@ -23,11 +28,9 @@ $(function()
 	connect(serverUrl,username,pass);
 	
 	function showSelectProject() {
-		$(this.window).resize(function(e) {
-			o.viewer.resize($('div#viewport').width(), $('div#viewport').height());
-		});
-
-		var dialog = $('<div />').attr('title', 'Open a project');
+		//$(this.window).resize(function(e) {
+		//	o.viewer.resize($('div#viewport').width(), $('div#viewport').height());
+		//});
 
 		o.bimServerApi.call("Bimsie1ServiceInterface", "getAllProjects", {onlyActive: true, onlyTopLevel: false}, function(projects){
 			projects.forEach(function(project){
@@ -35,12 +38,13 @@ $(function()
 				{
 					var identifier = $(this).parent().data('project');
 					var parentId = project.parentId;
-					var objId = project.oid;
 					/* If parent id is -1 its a main project so replace with # for the js tree */
 					if(parentId == -1){
 						parentId = "#";
 					};
-					jsonTree['core']['data'].push({'id':objId, 'parent' : parentId, "text":project.name,'data':project})
+
+					/* Set the project structure to the json tree */
+					jsonTree['core']['data'].push({'id': project.oid, 'parent' : parentId, "text":project.name,'data':project})
 				}
 			});
 
@@ -62,6 +66,11 @@ $(function()
             }
         }
 	});
+
+	/* Refresh the tree */
+	function refreshTree(){
+		$('#treeViewDiv').jstree(true).refresh();
+	}
 	
 	function connect(server, email, password) {
 		loadBimServerApi(server, null, function(bimServerApi){
@@ -77,7 +86,7 @@ $(function()
 					clickSelect.events.register('select', o.nodeSelected);
 					clickSelect.events.register('unselect', o.nodeUnselected);
 				});
-				
+
 				showSelectProject();
 			});
 		});
@@ -118,7 +127,6 @@ $(function()
 			summary.list.forEach(function(item){
 				if (item.name == "IFC Entities") {
 					var _this = this;
-					var totObjects = 0;
 					var toLoad = {};
 
 					item.types.forEach(function(type){
@@ -138,15 +146,32 @@ $(function()
 					$(window).resize(resize);
 
 					var models = {};
-					var objCount = 0;
+
+					// Load the models in to the JS tree
+					for (var key in toLoad) {
+						jsonTree['core']['data'].push({'id':key, 'parent' : project.oid, "text":key})
+
+					};
+
 					models[project.lastRevisionId] = o.model;
 					for (var key in toLoad) {
 						o.model.getAllOfType(key, true, function(object){
 							object.trans.mode = 0;
 							//console.log(object);
 							objCount++;
-							console.log('current count : ' + objCount + ' total count : ' + totObjects + ' key : ' + object['object']['_t']
-							+ ' id : ' + object.oid);
+							//console.log('current count : ' + objCount + ' total count : ' + totObjects + ' key : ' + object['object']['_t']
+							//+ ' id : ' + object.oid);
+
+							jsonTree['core']['data'].push({'id':object['object']['oid'], 'parent' : object['object']['_t'], "text":object['object']['Name']});
+
+
+							///* Get the count and compare. If the count matches refresh the tree */
+							if(totObjects == objCount && runOnce){
+								runOnce = false;
+								$('#treeViewDiv').jstree(true).settings.core.data = jsonTree['core']['data'];
+								$('#treeViewDiv').jstree(true).refresh();
+								console.log("found the duplicate");
+							}
 						});
 					}
 					var geometryLoader = new GeometryLoader(o.bimServerApi, models, o.viewer);

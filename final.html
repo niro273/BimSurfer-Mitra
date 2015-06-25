@@ -57,6 +57,17 @@ var debug = {};
 <script type="text/javascript" src="./lib/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.js"></script>
 
 <!-- <script type="text/javascript" src="./js/example1.js"></script> -->
+    <script>
+        /* Define the global variables */
+        var selectedNode;
+        var jsonTree = {
+            "core": {
+                "data": []
+            }
+        };
+        var treeData="";
+
+    </script>
 <script type="text/javascript" src="./js/final.js"></script>
 <script type="text/javascript" src="./js/bootstrap.js"></script>
 
@@ -87,10 +98,19 @@ var debug = {};
 
 <!-- Stack the columns on mobile by making one full-width and the other half-width -->
 <div class="row">
-	<!-- Div for the project tree viewer -->
+
+    <div class="treeClass col-xs-12" >
+        </div>
+
+
+    <!-- Div for the project tree viewer -->
   	<div class="col-xs-3" > 
-      <div id="treeViewDiv" class="col-xs-12"></div>
-      <div class="col-xs-12"> <h3>Object Details </h3> </div>
+        <div id="treeViewDiv" class="col-xs-12"></div>
+        <div id="nodeDetails" class="col-xs-12"> <h3>Object Details </h3> </div>
+        <!--<div id="tree" class="treeClass col-xs-12" style="height: 250px;overflow: auto;"> <h3>Tree Details </h3> </div>-->
+
+
+        <!--<div class="col-xs-12"> <button onclick="createDialog()"> create Dialog</button></div>-->
 	</div>  	
 
   	<!-- Div for the 3d renderer+ -->
@@ -101,5 +121,24 @@ var debug = {};
 		</div>
 	</div>
 </div>
+
+
+<script>
+//    function createDialog() {
+//        var dialog = $('<div />').attr('title', 'Open a project');
+//        var projectList = $('<ul />').attr('id', 'projects').appendTo(dialog);
+//
+//        $(dialog).dialog({
+//            autoOpen: true,
+//            width: 450,
+//            modal: false,
+//            closeOnEscape: false,
+//            open: function(event, ui) { $(".ui-dialog .ui-dialog-titlebar-close").hide(); },
+//            close: function() { $(dialog).remove(); }
+//        });
+//    }
+
+</script>
+
 </body>
 </html>

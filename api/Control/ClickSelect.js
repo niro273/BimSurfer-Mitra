@@ -102,6 +102,11 @@ BIMSURFER.Control.ClickSelect = BIMSURFER.Class(BIMSURFER.Control, {
 	 */
 	pick: function(hit) {
 		this.unselect();
+
+        /* Set the node selected to a global variable */
+//        console.log("clicked node : " + hit.nodeId);
+        selectedNode = hit.nodeId;
+
 		this.highlighted = this.SYSTEM.scene.findNode(hit.nodeId);
 		var groupId = this.highlighted.findParentByType("translate").data.groupId;
 

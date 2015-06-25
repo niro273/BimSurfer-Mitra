@@ -2,14 +2,11 @@
 $(function()
 {
 	var o = this;
-	var jsonTree = {
-			"core": {
-			"data": []
-			}
-		};
+
 
 	var objCount = 0;
 	var totObjects = 0;
+    var selectedNode = null;
 
 	var runOnce=true;
 
@@ -56,7 +53,7 @@ $(function()
 
     /* If the tree node is selected */
 	$('#treeViewDiv').on("changed.jstree", function (e, data) {
-	      console.log(data.selected);
+	      // console.log(data.selected);
 
         /* Find the node of the project selected */
         for(var i = 0; i < jsonTree['core']['data'].length; i++) {
@@ -98,7 +95,8 @@ $(function()
 		for (var i=0; i<indent; i++) {
 			div.append("&nbsp;");
 		}
-		div.append(object.Name);
+        var name = object.object['Name'];
+		div.append(name);
 		tree.append(div);
 		object.getIsDecomposedBy(function(isDecomposedBy){
 			isDecomposedBy.getRelatedObjects(function(relatedObject){
@@ -117,10 +115,9 @@ $(function()
 	
 	function loadProject(project) {
 		o.model = o.bimServerApi.getModel(project.oid, project.lastRevisionId, project.schema, false, function(model){
-			 //model.getAllOfType("IfcProject", true, function(project){
-			 //	buildDecomposedTree(project, $(".tree"), 0);
-			//   console.log(project);
-			 //});
+//			    model.getAllOfType("IfcProject", true, function(project){
+//			 	buildDecomposedTree(project, $(".treeClass"), 0);
+//			 });
 		});
 
 		o.bimServerApi.call("ServiceInterface", "getRevisionSummary", {roid: project.lastRevisionId}, function(summary){
@@ -157,13 +154,10 @@ $(function()
 					for (var key in toLoad) {
 						o.model.getAllOfType(key, true, function(object){
 							object.trans.mode = 0;
-							//console.log(object);
 							objCount++;
-							//console.log('current count : ' + objCount + ' total count : ' + totObjects + ' key : ' + object['object']['_t']
-							//+ ' id : ' + object.oid);
-
-							jsonTree['core']['data'].push({'id':object['object']['oid'], 'parent' : object['object']['_t'], "text":object['object']['Name']});
-
+                            /* adding the data to the json  */
+							jsonTree['core']['data'].push({'id':object['object']['oid'], 'parent' : object['object']['_t'], "text":object['object']['Name'] + "+" + object['object']['oid'],
+                                'data':object['object']});
 
 							///* Get the count and compare. If the count matches refresh the tree */
 							if(totObjects == objCount && runOnce){
@@ -272,11 +266,11 @@ $(function()
 			});
 		}
 
-		function isAlreadyExists(){
-			var myArray = [0,1,2],
-				needle = 1,
-				index = indexOf.call(myArray, needle); // 1
-		}
+//		function isAlreadyExists(){
+//			var myArray = [0,1,2],
+//				needle = 1,
+//				index = indexOf.call(myArray, needle); // 1
+//		}
 
 //		if(typeof this.SYSTEM.scene.data.properties[node.getId()] == 'undefined') {
 //			return;

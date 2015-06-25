@@ -246,6 +246,19 @@ BIMSURFER.Viewer = BIMSURFER.Class({
 		this.events.register('mouseUp', function(e) {
 			if(((e.offsetX > this.x) ? (e.offsetX - this.x < 5) : (this.x - e.offsetX < 5)) &&	((e.offsetY > this.y) ? (e.offsetY - this.y < 5) : (this.y - e.offsetY < 5))) {
 				this.scene.pick(this.x, this.y, {rayPick: true});
+
+                /* Set the object data to the div */
+                if(selectedNode != null){
+                    for(var i = 0; i < jsonTree['core']['data'].length; i++) {
+                        var obj = jsonTree['core']['data'][i];
+                        if(selectedNode == obj.id){
+//                            alert(JSON.stringify(jsonTree['core']['data'][i]));
+//                            break;
+                            $('#nodeDetails').html(JSON.stringify(jsonTree['core']['data'][i]));
+                        }
+                    }
+                }
+
 			}
 		}, lastDown);
 	},

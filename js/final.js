@@ -159,13 +159,13 @@ $(function()
 							jsonTree['core']['data'].push({'id':object['object']['oid'], 'parent' : object['object']['_t'], "text":object['object']['Name'] + "+" + object['object']['oid'],
                                 'data':object['object']});
 
-							///* Get the count and compare. If the count matches refresh the tree */
-							if(totObjects == objCount && runOnce){
-								runOnce = false;
-								$('#treeViewDiv').jstree(true).settings.core.data = jsonTree['core']['data'];
-								$('#treeViewDiv').jstree(true).refresh();
-								console.log("found the duplicate");
-							}
+//							///* Get the count and compare. If the count matches refresh the tree */
+//							if(totObjects == objCount && runOnce){
+//								runOnce = false;
+//								$('#treeViewDiv').jstree(true).settings.core.data = jsonTree['core']['data'];
+//								$('#treeViewDiv').jstree(true).refresh();
+//								console.log("found the duplicate");
+//							}
 						});
 					}
 					var geometryLoader = new GeometryLoader(o.bimServerApi, models, o.viewer);

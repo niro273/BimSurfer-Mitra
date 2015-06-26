@@ -252,9 +252,11 @@ BIMSURFER.Viewer = BIMSURFER.Class({
                     for(var i = 0; i < jsonTree['core']['data'].length; i++) {
                         var obj = jsonTree['core']['data'][i];
                         if(selectedNode == obj.id){
-//                            alert(JSON.stringify(jsonTree['core']['data'][i]));
-//                            break;
-                            $('#nodeDetails').html(JSON.stringify(jsonTree['core']['data'][i]));
+                            /* TO DO open only once  */
+                            $("#dialog").dialog("open");
+                            var div = $('#dialog');
+                            div.empty();
+                            div.append(JSON.stringify(jsonTree['core']['data'][i]));
                         }
                     }
                 }

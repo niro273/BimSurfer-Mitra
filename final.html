@@ -52,6 +52,7 @@ var debug = {};
 <link rel="stylesheet" href="./css/basic.css" type="text/css" />
 <link rel="stylesheet" href="./css/example1.css" type="text/css" />
 <link rel="stylesheet" href="./css/bootstrap.css" type="text/css" />
+
 <link rel="stylesheet" href="./lib/jquery-ui-1.10.3.custom/css/custom-theme/jquery-ui-1.10.3.custom.css">
 
 <script type="text/javascript" src="./lib/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.js"></script>
@@ -99,23 +100,28 @@ var debug = {};
 <!-- Stack the columns on mobile by making one full-width and the other half-width -->
 <div class="row">
 
-    <div class="treeClass col-xs-12" >
-        </div>
-
-
     <!-- Div for the project tree viewer -->
-  	<div class="col-xs-3" > 
-        <div id="treeViewDiv" class="col-xs-12"></div>
-        <div id="nodeDetails" class="col-xs-12"> <h3>Object Details </h3> </div>
-        <!--<div id="tree" class="treeClass col-xs-12" style="height: 250px;overflow: auto;"> <h3>Tree Details </h3> </div>-->
+  	<div class="col-xs-3" >
+        <div class="col-xs-12">
+            <div class="col-lg-12">
+                <h3>Projects Structure</h3>
+            </div>
+            <!-- Div tag to display the json tree view-->
+            <div id="treeViewDiv" class="col-lg-12" style="height: 400px; overflow: auto">
 
-
-        <!--<div class="col-xs-12"> <button onclick="createDialog()"> create Dialog</button></div>-->
-	</div>  	
+            </div>
+        </div>
+	</div>
 
   	<!-- Div for the 3d renderer+ -->
-  	<div class="col-xs-9">  		
-		<div id="full_screen" style="top : 0px !important">
+  	<div class="col-xs-9">
+
+        <div id="parent" class="col-xs-12">
+            <div id="dialog" title="Selected Object">
+            </div>
+        </div>
+
+        <div id="full_screen" class="col-lg-12" style="top : 0px !important">
 			<div id="viewport"></div>
 			<div id="progress_bar"></div>
 		</div>
@@ -124,19 +130,21 @@ var debug = {};
 
 
 <script>
-//    function createDialog() {
-//        var dialog = $('<div />').attr('title', 'Open a project');
-//        var projectList = $('<ul />').attr('id', 'projects').appendTo(dialog);
-//
-//        $(dialog).dialog({
-//            autoOpen: true,
-//            width: 450,
-//            modal: false,
-//            closeOnEscape: false,
-//            open: function(event, ui) { $(".ui-dialog .ui-dialog-titlebar-close").hide(); },
-//            close: function() { $(dialog).remove(); }
-//        });
-//    }
+
+$(function() {
+    $("#dialog").dialog({
+        autoOpen: false,
+        position: {
+            my: "left top",
+            at: "left bottom",
+            of: $("#parent")
+        }
+    });
+
+    $("#button").on("click", function() {
+        $("#dialog").dialog("open");
+    });
+});
 
 </script>
 

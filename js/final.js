@@ -39,7 +39,7 @@ $(function()
                     };
 
                     /* Set the project structure to the json tree */
-                    jsonTree['core']['data'].push({'id': project.oid, 'parent' : parentId, "text":project.name,'data':project})
+                    jsonTree['core']['data'].push({'id': project.oid, 'parent' : parentId, "text":project.name,'data':project,"icon":"fa fa-home"})
                     jsonData['core']['data'].push({'id': project.oid, 'parent' : parentId, "text":project.name,'data':project})
                 }
             });
@@ -173,7 +173,7 @@ $(function()
 
                     // Load the models in to the JS tree
                     for (var key in toLoad) {
-                        jsonTree['core']['data'].push({'id':key+project.lastRevisionId, 'parent' : project.oid, "text":key})
+                        jsonTree['core']['data'].push({'id':key+project.lastRevisionId, 'parent' : project.oid, "text":key,"icon":"fa fa-sort-amount-desc"})
                         jsonData['core']['data'].push({'id':key+project.lastRevisionId, 'parent' : project.oid, "text":key})
 
                     };
@@ -196,7 +196,7 @@ $(function()
                                 objCount++;
                                 /* adding the data to the json  */
                                 jsonTree['core']['data'].push({'id':object['object']['oid'], 'parent' : object['object']['_t']+project.lastRevisionId,
-                                    "text":object['object']['Name'] + "+" + object['object']['oid']});
+                                    "text":object['object']['Name'] + "+" + object['object']['oid'],"icon":"fa fa-circle"});
                                 jsonData['core']['data'].push({'id':object['object']['oid'], 'parent' : object['object']['_t']+project.lastRevisionId,
                                     "text":object['object']['Name'] + "+" + object['object']['oid'],'data':object['object']});
                             }

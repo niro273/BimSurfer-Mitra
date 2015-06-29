@@ -40,6 +40,7 @@ $(function()
 
                     /* Set the project structure to the json tree */
                     jsonTree['core']['data'].push({'id': project.oid, 'parent' : parentId, "text":project.name,'data':project})
+                    jsonData['core']['data'].push({'id': project.oid, 'parent' : parentId, "text":project.name,'data':project})
                 }
             });
 
@@ -172,7 +173,8 @@ $(function()
 
                     // Load the models in to the JS tree
                     for (var key in toLoad) {
-                        jsonTree['core']['data'].push({'id':key, 'parent' : project.oid, "text":key})
+                        jsonTree['core']['data'].push({'id':key+project.lastRevisionId, 'parent' : project.oid, "text":key})
+                        jsonData['core']['data'].push({'id':key+project.lastRevisionId, 'parent' : project.oid, "text":key})
 
                     };
 
@@ -193,7 +195,9 @@ $(function()
                             if(nodeExists == false){
                                 objCount++;
                                 /* adding the data to the json  */
-                                jsonTree['core']['data'].push({'id':object['object']['oid'], 'parent' : object['object']['_t'],
+                                jsonTree['core']['data'].push({'id':object['object']['oid'], 'parent' : object['object']['_t']+project.lastRevisionId,
+                                    "text":object['object']['Name'] + "+" + object['object']['oid']});
+                                jsonData['core']['data'].push({'id':object['object']['oid'], 'parent' : object['object']['_t']+project.lastRevisionId,
                                     "text":object['object']['Name'] + "+" + object['object']['oid'],'data':object['object']});
                             }
 

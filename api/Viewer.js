@@ -256,7 +256,7 @@ BIMSURFER.Viewer = BIMSURFER.Class({
                             $("#dialog").dialog("open");
                             var div = $('#dialog');
                             div.empty();
-                            div.append(JSON.stringify(jsonTree['core']['data'][i]));
+                            div.append(JSON.stringify(jsonData['core']['data'][i]));
                         }
                     }
                 }

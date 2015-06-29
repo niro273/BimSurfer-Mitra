@@ -194,11 +194,17 @@ $(function()
 
                             if(nodeExists == false){
                                 objCount++;
+                                var name = "";
+                                if(object['object'].hasOwnProperty('Name')){
+                                    name = object['object']['Name'];
+                                }else if(object['object'].hasOwnProperty('LongName')){
+                                    name = object['object']['LongName'];
+                                }
                                 /* adding the data to the json  */
                                 jsonTree['core']['data'].push({'id':object['object']['oid'], 'parent' : object['object']['_t']+project.lastRevisionId,
-                                    "text":object['object']['Name'] + "+" + object['object']['oid'],"icon":"fa fa-circle"});
+                                    "text":name + "+" + object['object']['oid'],"icon":"fa fa-circle"});
                                 jsonData['core']['data'].push({'id':object['object']['oid'], 'parent' : object['object']['_t']+project.lastRevisionId,
-                                    "text":object['object']['Name'] + "+" + object['object']['oid'],'data':object['object']});
+                                    "text":name+ "+" + object['object']['oid'],'data':object['object']});
                             }
 
                             if(objCount == totObjects && allLoaded == false){

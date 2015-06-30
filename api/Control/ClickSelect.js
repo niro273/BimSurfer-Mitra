@@ -104,7 +104,7 @@ BIMSURFER.Control.ClickSelect = BIMSURFER.Class(BIMSURFER.Control, {
 		this.unselect();
 
         /* Set the node selected to a global variable */
-        console.log("clicked node : " + hit);
+        //console.log("clicked node : " + hit);
         selectedNode = hit.nodeId;
 
 		this.highlighted = this.SYSTEM.scene.findNode(hit.nodeId);

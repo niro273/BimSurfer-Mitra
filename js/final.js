@@ -11,7 +11,6 @@ $(function()
 
     var runOnce=true;
 
-
     o.server = null;
     o.viewer = null;
     o.bimServerApi = null;
@@ -39,8 +38,8 @@ $(function()
                     };
 
                     /* Set the project structure to the json tree */
-                    jsonTree['core']['data'].push({'id': project.oid, 'parent' : parentId, "text":project.name,'data':project,"icon":"fa fa-home"})
-                    jsonData['core']['data'].push({'id': project.oid, 'parent' : parentId, "text":project.name,'data':project})
+                    jsonTree['core']['data'].push({'id': project.oid, 'parent' : parentId, "text":project.name,'data':project,"icon":"fa fa-home"});
+                    jsonData['core']['data'].push({'id': project.oid, 'parent' : parentId, "text":project.name,'data':project,'isProject':true});
                 }
             });
 
@@ -52,20 +51,33 @@ $(function()
 
     /* If the tree node is selected */
     $('#treeViewDiv').on("changed.jstree", function (e, data) {
-        // console.log(data.selected);
+         console.log(data.selected);
         if(process){
             /* Find the node of the project selected */
             for(var i = 0; i < jsonTree['core']['data'].length; i++) {
                 var obj = jsonTree['core']['data'][i];
                 if(data.selected == obj.id){
-                    loadProject(jsonTree['core']['data'][i]['data']);
+                    if(jsonData['core']['data'][i]['isProject'] == true)
+                        loadProject(jsonTree['core']['data'][i]['data']);
+
+                    /* */
+                    /* TO DO open only once  */
+                    $("#tenant").dialog("open");
+                    var div = $('#tenant_details');
+                    div.empty();
+
+                    for (var key in jsonData['core']['data'][i]) {
+                        if (jsonData['core']['data'][i].hasOwnProperty(key)) {
+                            div.append('<p>'+ key + ' -> '+ jsonData['core']['data'][i][key] + '</p>')
+                        }
+                    }
                 }
             }
         }
 
     });
 
-    /* Refresh the tree */
+    /* Refresh the tree var process is used as switch as the refresh triggered the js node selection */
     function refreshTree(){
         var tree = $('#treeViewDiv').jstree(true);
         process = false;
@@ -108,7 +120,7 @@ $(function()
 
     $('#refreshTree').click(function(){
         refreshTree();
-    })
+    });
 
 
     function buildDecomposedTree(object, tree, indent) {
@@ -214,16 +226,6 @@ $(function()
                                 $('#treeViewDiv').jstree(true).settings.core.data = jsonTree['core']['data'];
                                 refreshTree();
                             }
-
-
-
-//							///* Get the count and compare. If the count matches refresh the tree */
-//							if(totObjects == objCount && runOnce){
-//								runOnce = false;
-//								$('#treeViewDiv').jstree(true).settings.core.data = jsonTree['core']['data'];
-//								$('#treeViewDiv').jstree(true).refresh();
-//								console.log("found the duplicate");
-//							}
                         });
                     }
                     var geometryLoader = new GeometryLoader(o.bimServerApi, models, o.viewer);

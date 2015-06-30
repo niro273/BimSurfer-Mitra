@@ -253,10 +253,18 @@ BIMSURFER.Viewer = BIMSURFER.Class({
                         var obj = jsonTree['core']['data'][i];
                         if(selectedNode == obj.id){
                             /* TO DO open only once  */
-                            $("#dialog").dialog("open");
-                            var div = $('#dialog');
-                            div.empty();
-                            div.append(JSON.stringify(jsonData['core']['data'][i]));
+                            //$("#dialog").dialog("open");
+                            //var div = $('#dialog');
+                            //div.empty();
+                            //div.append(JSON.stringify(jsonData['core']['data'][i]));
+
+
+							//$('#tenant').tabbedDialog();
+
+							$("#tenant").dialog("open");
+							var div = $('#tenant_details');
+							div.empty();
+							div.append(JSON.stringify(jsonData['core']['data'][i]));
                         }
                     }
                 }

@@ -6,6 +6,9 @@
 *.exe
 *.o
 *.so
+
+# idea generated files #
+*.idea
  
 # Packages #
 ############

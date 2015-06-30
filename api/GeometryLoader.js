@@ -154,6 +154,7 @@ function GeometryLoader(bimServerApi, models, viewer) {
 		
 		o.models[roid].get(oid, function(object){
 			if (o.viewer.scene.findNode(objectId) != null) {
+				var result = o.viewer.scene.findNode(objectId)
 				console.log("Node with id " + objectId + " already existed");
 //                o.viewer.scene.destroyNode(roid);
 				return;

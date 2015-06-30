@@ -263,6 +263,11 @@ BIMSURFER.Viewer = BIMSURFER.Class({
 								}
 							}
 							//div.append(JSON.stringify(jsonData['core']['data'][i]));
+
+                            /* Auto open the tree node */
+                            $('#treeViewDiv').jstree('open_node', jsonData['core']['data'][i]['parent'], function(e, data) {
+                                $('#treeViewDiv').jstree(('select_node'), jsonData['core']['data'][i]['id']);
+                            }, true);
                         }
                     }
                 }
@@ -270,6 +275,14 @@ BIMSURFER.Viewer = BIMSURFER.Class({
 			}
 		}, lastDown);
 	},
+
+    /**
+     * Initializes the common events of the viewer
+     */
+    selectObject: function() {
+        //this.scene.pick(500, 300, {rayPick: true});
+        //var result = this.scene.findNode(25639);
+    },
 
 	/**
 	 * Creates or updates the SceneJS Scene, based on a revision

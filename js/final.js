@@ -70,9 +70,11 @@ $(function()
                         if (jsonData['core']['data'][i].hasOwnProperty(key)) {
                             div.append('<p>'+ key + ' -> '+ jsonData['core']['data'][i][key] + '</p>')
 
-                            // select the element in the canvas
+
                         }
                     }
+                    // select the element in the canvas
+                    //o.viewer.selectObject(2425110);
                 }
             }
         }

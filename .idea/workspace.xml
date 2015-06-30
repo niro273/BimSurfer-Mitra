@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ea7e6422-63f5-491d-b9f1-169079b5c583" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/Control/ClickSelect.js" afterPath="$PROJECT_DIR$/api/Control/ClickSelect.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/final.js" afterPath="$PROJECT_DIR$/js/final.js" />
-    </list>
+    <list default="true" id="ea7e6422-63f5-491d-b9f1-169079b5c583" name="Default" comment="" />
     <ignored path="BimSurfer-Mitra.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -523,12 +520,12 @@
       <workItem from="1435550635092" duration="5748000" />
       <workItem from="1435592191407" duration="11000" />
       <workItem from="1435641977799" duration="2871000" />
-      <workItem from="1435644865073" duration="2634000" />
+      <workItem from="1435644865073" duration="2706000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="45966000" />
+    <option name="totallyTimeSpent" value="46038000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1366" height="768" extended-state="6" />

@@ -69,6 +69,8 @@ $(function()
                     for (var key in jsonData['core']['data'][i]) {
                         if (jsonData['core']['data'][i].hasOwnProperty(key)) {
                             div.append('<p>'+ key + ' -> '+ jsonData['core']['data'][i][key] + '</p>')
+
+                            // select the element in the canvas
                         }
                     }
                 }

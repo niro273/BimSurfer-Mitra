@@ -106,7 +106,7 @@ BIMSURFER.Control.ClickSelect = BIMSURFER.Class(BIMSURFER.Control, {
         /* Set the node selected to a global variable */
         //console.log("clicked node : " + hit);
         selectedNode = hit.nodeId;
-		//test
+		//test 123
 
 		this.highlighted = this.SYSTEM.scene.findNode(hit.nodeId);
 		var groupId = this.highlighted.findParentByType("translate").data.groupId;

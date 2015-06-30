@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ea7e6422-63f5-491d-b9f1-169079b5c583" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/Control/ClickSelect.js" afterPath="$PROJECT_DIR$/api/Control/ClickSelect.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/final.js" afterPath="$PROJECT_DIR$/js/final.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="BimSurfer-Mitra.iws" />
@@ -26,11 +28,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="final.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="final.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/final.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.193548">
-              <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.6509434">
+              <caret line="72" column="63" selection-start-line="72" selection-start-column="63" selection-end-line="72" selection-end-column="63" />
               <folding />
             </state>
           </provider>
@@ -56,11 +58,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClickSelect.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ClickSelect.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/api/Control/ClickSelect.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5924765">
-              <caret line="108" column="14" selection-start-line="108" selection-start-column="14" selection-end-line="108" selection-end-column="14" />
+            <state vertical-scroll-proportion="7.448276">
+              <caret line="102" column="22" selection-start-line="102" selection-start-column="19" selection-end-line="102" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -119,8 +121,8 @@
       <list>
         <option value="$PROJECT_DIR$/final.html" />
         <option value="$PROJECT_DIR$/api/Viewer.js" />
-        <option value="$PROJECT_DIR$/js/final.js" />
         <option value="$PROJECT_DIR$/api/Control/ClickSelect.js" />
+        <option value="$PROJECT_DIR$/js/final.js" />
       </list>
     </option>
   </component>
@@ -523,12 +525,12 @@
       <workItem from="1435550635092" duration="5748000" />
       <workItem from="1435592191407" duration="11000" />
       <workItem from="1435641977799" duration="2871000" />
-      <workItem from="1435644865073" duration="3325000" />
+      <workItem from="1435644865073" duration="4346000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="46657000" />
+    <option name="totallyTimeSpent" value="47678000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1366" height="768" extended-state="6" />
@@ -986,14 +988,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/final.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.193548">
-          <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/api/Viewer.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1012,8 +1006,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/api/Control/ClickSelect.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5924765">
-          <caret line="108" column="14" selection-start-line="108" selection-start-column="14" selection-end-line="108" selection-end-column="14" />
+        <state vertical-scroll-proportion="7.448276">
+          <caret line="102" column="22" selection-start-line="102" selection-start-column="19" selection-end-line="102" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/final.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6509434">
+          <caret line="72" column="63" selection-start-line="72" selection-start-column="63" selection-end-line="72" selection-end-column="63" />
           <folding />
         </state>
       </provider>

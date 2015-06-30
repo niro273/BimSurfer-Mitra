@@ -8,7 +8,7 @@
 *.so
 
 # idea generated files #
-*.idea/*
+.idea/*
  
 # Packages #
 ############

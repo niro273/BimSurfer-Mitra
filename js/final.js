@@ -69,10 +69,10 @@ $(function()
                     for (var key in jsonData['core']['data'][i]) {
                         if (jsonData['core']['data'][i].hasOwnProperty(key)) {
                             div.append('<p>'+ key + ' -> '+ jsonData['core']['data'][i][key] + '</p>')
-
-
                         }
                     }
+                    var seleectedNode = {'id':jsonData['core']['data'][i]['id']};
+                    nodeSelected(seleectedNode);
                     // select the element in the canvas
                     //o.viewer.selectObject(2425110);
                 }
@@ -260,20 +260,20 @@ $(function()
 
     function showProperty (propertySet, property, headerTr, editable){
         var tr = $("<tr></tr>");
-        tr.attr("oid", property.__oid);
-        tr.attr("psetoid", propertySet.__oid);
+        tr.attr("oid", property.oid);
+        tr.attr("psetoid", propertySet.oid);
         headerTr.after(tr);
         if (property.changedFields != null && (property.changedFields["NominalValue"] || property.changedFields["Name"])) {
             tr.addClass("warning");
         }
 
-        tr.append("<td>" + property.Name + "</td>");
+        tr.append("<td>" + property.object.Name + "</td>");
         getValue(tr, property, editable);
-    };
+    }
 
     function showProperties(propertySet, headerTr) {
         propertySet.getHasProperties(function(property){
-            if (property.__type == "IfcPropertySingleValue") {
+            if (property.object._t == "IfcPropertySingleValue") {
                 showProperty(propertySet, property, headerTr);
             }
         });
@@ -281,8 +281,8 @@ $(function()
 
     function showPropertySet(propertySet) {
         var headerTr = $("<tr class=\"active\"></tr>");
-        headerTr.attr("oid", propertySet.__oid);
-        headerTr.attr("uri", propertySet.Name);
+        headerTr.attr("oid", propertySet.oid);
+        headerTr.attr("uri", propertySet.object.Name);
         if (propertySet.changedFields != null && propertySet.changedFields["Name"]) {
             headerTr.addClass("warning");
         }
@@ -290,7 +290,7 @@ $(function()
         var headerTd = $("<td></td>");
         headerTr.append(headerTd);
 
-        headerTd.append("<b>" + propertySet.Name + "</b>");
+        headerTd.append("<b>" + propertySet.object.Name + "</b>");
         showProperties(propertySet, headerTr);
     }
 
@@ -298,7 +298,7 @@ $(function()
         (function (tr) {
             property.getNominalValue(function(value){
                 var td = $("<td>");
-                var v = value == null ? "" : value.value;
+                var v = value == null ? "" : value._v;
                 var span = $("<span class=\"value nonEditable\">" + v + "</span>");
                 td.append(span);
                 tr.append(td);
@@ -312,15 +312,15 @@ $(function()
             o.model.get(node.id, function(product){
                 if (product.oid == node.id) {
                     var tr = $("<tr></tr>");
-                    tr.append("<b>" + product.__type + "</b>");
-                    if (product.name != null) {
-                        tr.append("<b>" + product.name + "</b>");
+                    tr.append("<b>" + product.object._t + "</b>");
+                    if (product.object.Name != null) {
+                        tr.append("<b>" + product.object.Name + "</b>");
                     }
                     $("#object_info table tbody").append(tr);
                     product.getIsDefinedBy(function(isDefinedBy){
-                        if (isDefinedBy.__type == "IfcRelDefinesByProperties") {
+                        if (isDefinedBy.object._t == "IfcRelDefinesByProperties") {
                             isDefinedBy.getRelatingPropertyDefinition(function(propertySet){
-                                if (propertySet.__type == "IfcPropertySet") {
+                                if (propertySet.object._t == "IfcPropertySet") {
                                     showPropertySet(propertySet);
                                 }
                             });
